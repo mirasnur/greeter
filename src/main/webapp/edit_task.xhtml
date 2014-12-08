@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>Edit User Tasks</title>
+</h:head>
+<h:body>
+    <h3>#{editTaskBean.user.username}'s Tasks</h3>
+    <h:form rendered="#{not empty editTaskBean.list}">
+
+        <h:dataTable value="#{editTaskBean.list}" var="task">
+            <h:column>
+                <f:facet name="header">Title</f:facet>
+                 #{task.title}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                #{task.description}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Due date</f:facet>
+                <h:outputText value="#{task.date}">
+                    <f:convertDateTime pattern="d-M-yyyy"/>
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">State</f:facet>
+                #{task.state}
+            </h:column>
+
+            <h:column>
+                <h:commandButton value="edit" action="#{editTaskBean.edit(task)}" />
+            </h:column>
+
+            <h:column>
+                <h:commandButton value="delete" action="#{editTaskBean.delete(task)}"/>
+            </h:column>
+
+            <h:column>
+                <h:commandButton value="mark as done" action="#{editTaskBean.mark(task)}"/>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+        <h:panelGroup rendered="#{empty editTaskBean.list}">
+            <p>Table is empty!</p>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{editTaskBean.edit}">
+            <h3>Edit task #{editTaskBean.task.id}</h3>
+            <h:form>
+                <p>Title: <h:inputText value="#{editTaskBean.task.title}" /></p>
+                <p>Description: <h:inputText value="#{editTaskBean.task.description}"/></p>
+                <p>Due date:
+                    <h:inputText value="#{editTaskBean.task.date}">
+                        <f:convertDateTime pattern="d-M-yyyy"/>
+                    </h:inputText></p>
+                <p><h:commandButton value="save" action="#{editTaskBean.save}"/></p>
+            </h:form>
+        </h:panelGroup>
+
+    <h:link outcome="/greet.xhtml">Greet a user!</h:link>
+</h:body>
+</html>

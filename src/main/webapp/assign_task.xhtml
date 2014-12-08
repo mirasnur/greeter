@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+    <ui:define name="content">
+        <h:messages />
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="title">Enter title:</h:outputLabel>
+                <h:inputText id="title" value="#{newTask.title}" />
+                <h:message for="username" />
+
+                <h:outputLabel for="user">Select user:</h:outputLabel>
+                <h:selectOneMenu value="#{assignTaskController.userId}" id="user">
+                    <f:selectItems value="#{assignTaskController.users}" var="u"
+                                   itemLabel="#{u.username}" itemValue="#{u.username}"/>
+                </h:selectOneMenu>
+                <h:message for="user" />
+
+                <h:outputLabel for="description">Enter description:</h:outputLabel>
+                <h:inputText id="description" value="#{newTask.description}" />
+                <h:message for="description" />
+
+                <h:outputLabel for="date">Enter date:</h:outputLabel>
+                <h:inputText id="date" value="#{newTask.date}">
+                    <f:convertDateTime pattern="d-M-yyyy" />
+                </h:inputText>
+                <h:message for="date"/>
+
+            </h:panelGrid>
+
+            <h:commandButton action="#{assignTaskController.assign}"
+                value="Assign Task" />
+            <h:commandButton action="#{assignTaskController.cancel}"
+                             value="Cancel" />
+        </h:form>
+        <h:link outcome="/greet.xhtml">Greet a user!</h:link>
+    </ui:define>
+</ui:composition>
+</html>
